@@ -1,0 +1,126 @@
+import SwiftUI
+
+struct ContentView: View {
+    
+    init() {
+        UISegmentedControl.appearance().selectedSegmentTintColor = .darkGray
+    }
+    
+    @State private var appleYear: ChoiceYear = .oneLogo
+    @State var scaleValue = 1.0
+    
+    var body: some View {
+        NavigationView {
+            VStack(alignment: .center) {
+                Text("HISTÓRIA LOGO APPLE")
+                    .font(.system(.title2).bold())
+                    .padding(.top, 70)
+                
+                Text("ESCOLHA UM ANO")
+                    .font(.system(size: 15).bold())
+                    .padding(.top, 50)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            
+ 
+                
+                Picker("Escolha um lado", selection: $appleYear) {
+                    ForEach(ChoiceYear.allCases, id: \.self) {
+                        Text($0.rawValue)
+                    }
+                }
+                .padding(.top, 5)
+                Spacer(minLength: 10)
+                
+                if appleYear == .oneLogo {
+                    Side(appleYear: appleYear)
+                        .shadow(color: .white, radius: 96)
+                    
+                    Text("Primeira versão criada em 1976")
+                        .padding(.top, 70)
+                        .font(.system(size: 13))
+                        .foregroundColor(.gray)
+                }
+                
+                else if appleYear == .twoLogo {
+                    Side(appleYear: appleYear)
+                        .shadow(color: .white, radius: 96)
+                    
+                    Text("Segunda versão criada em 1977")
+                        .padding(.top, 70)
+                        .font(.system(size: 13))
+                        .foregroundColor(.gray)
+                }
+                
+                else if appleYear == .threeLogo {
+                    Side(appleYear: appleYear)
+                        .shadow(color: .white, radius: 96)
+                    
+                    Text("Quinta versão criada em 2007")
+                        .padding(.top, 70)
+                        .font(.system(size: 13))
+                        .foregroundColor(.gray)
+                }
+                
+                else {
+                    Side(appleYear: appleYear)
+                        .shadow(color: .white, radius: 96)
+                    
+                    Text("Presente")
+                        .padding(.top, 70)
+                        .font(.system(size: 13))
+                        .foregroundColor(.gray)
+                        
+
+                }
+                
+                Spacer()
+                
+            }
+            .pickerStyle(SegmentedPickerStyle.segmented)
+        }
+    }
+}
+
+enum ChoiceYear: String, CaseIterable {
+    case oneLogo = "1976"
+    case twoLogo = "1977"
+    case threeLogo = "2007"
+    case fourlogo = "Present"
+}
+
+struct Side: View {
+    var appleYear: ChoiceYear
+    
+    var body: some View{
+        switch appleYear {
+        case .oneLogo:
+            LogoImageView(ImageName: "Apple.1976")
+        case .twoLogo:
+            LogoImageView(ImageName: "Apple.1977")
+        case .threeLogo:
+            LogoImageView(ImageName: "Apple.2007")
+        
+        case .fourlogo:
+            LogoImageView(ImageName: "Apple.present")
+        }
+    }
+}
+
+struct LogoImageView: View{
+    var ImageName: String
+    
+    var body: some View {
+        Image(ImageName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: 200, height: 200)
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .preferredColorScheme(.dark)
+        
+    }
+}
